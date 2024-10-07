@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from .models import Especialidad
+from .models import Contacto, Especialidad
 from .models import Estadoturno
 from .models import Obra_Social
 from .models import Profesional
@@ -45,6 +45,14 @@ class PacienteSerializer(serializers.ModelSerializer):
         fields='__all__'#Para que tome todos los campos  
 # #6
 class TurnosSerializer(serializers.ModelSerializer):
+    Paciente = PacienteSerializer(read_only=True)
+
     class Meta:
         model = Turnos
-        fields='__all__'#Para que tome todos los campos     
+        fields = ['id', 'paciente', 'profecional', 'hora_turno', 'fecha_turno', 'especialidad']
+
+#7
+class ContactoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contacto      
+        fields = '__all__'  

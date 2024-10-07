@@ -70,11 +70,35 @@ class Turnos(models.Model):
     estado_turno_id = models.CharField(max_length=150, null=True, blank=True)
     username = models.CharField(max_length=150, null=True, blank=True)
     profesional_id = models.CharField(max_length=150, null=True, blank=True)
-    especialidad = models.CharField(max_length=150, null=True, blank=True)
+    especialidad = models.ForeignKey(Obra_Social, on_delete=models.SET_NULL, null=True, blank=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Paciente')
+    profecional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
+    creado_en = models.DateTimeField(auto_now_add=True)
+    eliminado= models.BooleanField(default=False, blank=True, verbose_name='Cancelado')
+
     
     def __str__(self):
-        return f"Turno {self.id} - {self.fecha_turno} {self.hora_turno}"
+        return f"Turno {self.paciente} con {self.profecional} {self.fecha_turno} {self.hora_turno}"
     class Meta:
         verbose_name = "Turno"
         verbose_name_plural = "Turnos"
         
+
+
+#7        
+opciones_para_consulta = [
+
+    [0, 'Consulta'],
+    [1, 'Sugerencia'],
+    [2, 'Reclamos']
+]
+class Contacto(models.Model):
+    nombre = models.CharField(max_length=50)
+    apellido = models.CharField(max_length=50)
+    correo = models.EmailField()
+    tipo_de_consulta = models.IntegerField(choices=opciones_para_consulta)
+    mensaje = models.TextField()
+    aviso = models.BooleanField()
+
+    def __str__(self):
+        return f"Contacto {self.nombre} - {self.apellido} {self.correo} {self.mensaje}"

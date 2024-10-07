@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializer import EspecialidadSerializer
+from .serializer import ContactoSerializer, EspecialidadSerializer
 from .serializer import EstadoturnoSerializer
 from .serializer import ObraSocialSerializer
 from .serializer import ProfesionalSerializer 
@@ -18,7 +18,7 @@ from .serializer import PacienteSerializer
 from .serializer import TurnosSerializer
 from .serializer import UserSerializer
 
-from .models import Especialidad
+from .models import Contacto, Especialidad
 from .models import Estadoturno
 from .models import Obra_Social
 from .models import Profesional
@@ -230,3 +230,21 @@ class PacienteViewSet(viewsets.ModelViewSet):
 class TurnosViewSet(viewsets.ModelViewSet):
     queryset = Turnos.objects.all()
     serializer_class = TurnosSerializer  
+
+    def create(self, request, *args, **kwargs):
+
+        paciente_id = request.data.get('paciente_id')
+        if not paciente_id:
+            return Response({'error':"El Campo 'paciente_id' es obligatorio"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            paciente = Paciente.objects.get(id=paciente_id)
+        except Paciente.DoesNotExist:
+            return Response({'error': 'Paciente no Encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(paciente=paciente)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class ContactoViewSet(viewsets.ModelViewSet):
+    queryset = Contacto.objects.all()
+    serializer_class = ContactoSerializer
