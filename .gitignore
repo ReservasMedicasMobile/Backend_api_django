@@ -1,3 +1,11 @@
 mientornovirtual
 .mientornovirtual
 /mientornovirtual
+__pycache__
+.__pycache__
+/__pycache__
+__pycache__/
+.vsc
+node_modules/
+.node_modules
+.venv
