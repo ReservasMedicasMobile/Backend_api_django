@@ -69,11 +69,11 @@ class Turnos(models.Model):
     hora_turno = models.TimeField(null=True, blank=True)
     estado_turno_id = models.CharField(max_length=150, null=True, blank=True)
     username = models.CharField(max_length=150, null=True, blank=True)
-    profesional_id = models.CharField(max_length=150, null=True, blank=True)
+    #profesional_id = models.CharField(max_length=150, null=True, blank=True)
     especialidad = models.ForeignKey(Obra_Social, on_delete=models.SET_NULL, null=True, blank=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Paciente')
     profesional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
-    creado_en = models.DateTimeField(auto_now_add=True)
+    creado_en = models.DateTimeField(default=timezone.now)
     eliminado= models.BooleanField(default=False, blank=True, verbose_name='Cancelado')
 
     

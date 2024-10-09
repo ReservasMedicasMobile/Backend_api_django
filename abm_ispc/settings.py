@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'abm_ispc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reservasmedicasdb',
+        'NAME': 'reservasmedicas_db',
         'USER': 'desarrollo_web_2024',
         'PASSWORD': 'web_2024',
-        'HOST': 'ispcserver1.ddns.net',
-        'PORT': '3306',
+        'HOST': '192.168.0.30',
+        'PORT': '6033',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'sql_mode': 'traditional',
