@@ -72,13 +72,13 @@ class Turnos(models.Model):
     profesional_id = models.CharField(max_length=150, null=True, blank=True)
     especialidad = models.ForeignKey(Obra_Social, on_delete=models.SET_NULL, null=True, blank=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Paciente')
-    profecional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
+    profesional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
     creado_en = models.DateTimeField(auto_now_add=True)
     eliminado= models.BooleanField(default=False, blank=True, verbose_name='Cancelado')
 
     
     def __str__(self):
-        return f"Turno {self.paciente} con {self.profecional} {self.fecha_turno} {self.hora_turno}"
+        return f"Turno {self.paciente} con {self.profesional} {self.fecha_turno} {self.hora_turno}"
     class Meta:
         verbose_name = "Turno"
         verbose_name_plural = "Turnos"
