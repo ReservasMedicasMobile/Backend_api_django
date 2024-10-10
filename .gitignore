@@ -9,3 +9,7 @@ __pycache__/
 node_modules/
 .node_modules
 .venv
+archivo
+.archivo
+Dockerfile
+.Dockerfile
