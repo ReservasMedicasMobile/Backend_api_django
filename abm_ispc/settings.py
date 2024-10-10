@@ -85,7 +85,8 @@ DATABASES = {
         'NAME': 'reservasmedicas_db',
         'USER': 'desarrollo_web_2024',
         'PASSWORD': 'web_2024',
-        'HOST': 'reservasmedicas.ddns.net',
+        # 'HOST': 'reservasmedicas.ddns.net',
+        'HOST': '192.168.0.30',
         'PORT': '6033',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
