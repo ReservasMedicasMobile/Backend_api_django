@@ -21,3 +21,6 @@ comandos.txt
 .comandos.txt
 comandos_pip.txt
 .comandos_pip.txt
+/abm_ispc/__pycache__
+/api/__pycache__
+api/migrations/__pycache__/__init__.cpython-311.pyc
