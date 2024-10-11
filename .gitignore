@@ -17,8 +17,8 @@ img
 .img
 requeriment_extras.txt
 .requeriment_extras.txt
-comandos.txt
-.comandos.txt
+comandos_docker.txt
+.comandos_docker.txt
 comandos_pip.txt
 .comandos_pip.txt
 /abm_ispc/__pycache__
