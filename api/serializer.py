@@ -49,7 +49,7 @@ class TurnosSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Turnos
-        fields = ['id', 'Paciente', 'profesional', 'hora_turno', 'fecha_turno', 'especialidad']
+        fields = ['id', 'paciente', 'profesional', 'hora_turno', 'fecha_turno', 'especialidad']
 
 #7
 class ContactoSerializer(serializers.ModelSerializer):
