@@ -71,7 +71,7 @@ class Turnos(models.Model):
     username = models.CharField(max_length=150, null=True, blank=True)
     #profesional_id = models.CharField(max_length=150, null=True, blank=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.SET_NULL, null=True, blank=True)
-    Paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Paciente')
+    paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Paciente')
     profesional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
     #profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE)
     creado_en = models.DateTimeField(default=timezone.now)

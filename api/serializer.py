@@ -45,7 +45,7 @@ class PacienteSerializer(serializers.ModelSerializer):
         fields='__all__'#Para que tome todos los campos  
 # #6
 class TurnosSerializer(serializers.ModelSerializer):
-    Paciente = PacienteSerializer(read_only=True)
+    paciente = PacienteSerializer(read_only=True)
 
     class Meta:
         model = Turnos
