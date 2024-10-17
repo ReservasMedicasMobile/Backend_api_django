@@ -4,7 +4,9 @@ from django.utils import timezone
 #from django.core.validators import MinLengthValidator, MaxLengthValidator
 # import datetime
 # from django.contrib.auth.validators import *
-# from django.contrib.auth.models import AbstractUser
+#from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+
 
 
 
@@ -48,10 +50,12 @@ class Paciente(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     dni = models.CharField(max_length=100)
+    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     fecha_nacimiento = models.DateField()
     obra_social = models.ForeignKey(Obra_Social, on_delete=models.CASCADE, related_name='pacientes')
     correo = models.CharField(max_length=100)
     telefono = models.CharField(max_length=100)
+
     class Meta:
         verbose_name = "Paciente"
         verbose_name_plural = "Pacientes"
@@ -71,7 +75,6 @@ class Turnos(models.Model):
     username = models.CharField(max_length=150, null=True, blank=True)
     #profesional_id = models.CharField(max_length=150, null=True, blank=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.SET_NULL, null=True, blank=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Paciente')
     profesional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
     #profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE)
     creado_en = models.DateTimeField(default=timezone.now)
