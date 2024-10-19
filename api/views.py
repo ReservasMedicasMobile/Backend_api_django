@@ -207,6 +207,64 @@ def get_profesionales_por_especialidad(request, especialidad_id):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+@api_view(['PUT', 'PATCH'])
+def actualizar_especialidad(request, especialidad_id):
+    try:
+        especialidad = Especialidad.objects.get(id=especialidad_id)
+    except Especialidad.DoesNotExist:
+        return Response({"error": "Especialidad not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = EspecialidadSerializer(especialidad, data=request.data) 
+    else:  # PATCH
+        serializer = EspecialidadSerializer(especialidad, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def eliminar_especialidad(request, especialidad_id):
+    try:
+        especialidad = Especialidad.objects.get(id=especialidad_id)
+        especialidad.delete() 
+        return Response({"message": "Especialidad deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Especialidad.DoesNotExist:
+        return Response({"error": "Especialidad not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+@api_view(['PUT', 'PATCH'])
+def actualizar_profesional(request, profesional_id):
+    try:
+        profesional = Profesional.objects.get(id=profesional_id)
+    except Profesional.DoesNotExist:
+        return Response({"error": "Profesional not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = ProfesionalSerializer(profesional, data=request.data) 
+    else:  # PATCH
+        serializer = ProfesionalSerializer(profesional, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def eliminar_profesional(request, profesional_id):
+    try:
+        profesional = Profesional.objects.get(id=profesional_id)
+        profesional.delete() 
+        return Response({"message": "Profesional deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Profesional.DoesNotExist:
+        return Response({"error": "Profesional not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+
 class EspecialidadViewSet(viewsets.ModelViewSet):
     queryset = Especialidad.objects.all()
     serializer_class = EspecialidadSerializer

@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 class EspecialidadSerializer(serializers.ModelSerializer):
     class Meta:
         model=Especialidad
-        fields='__all__'#Para que tome todos los campos
+        fields=['id', 'especialidad', 'descripcion']
 # #2
 class EstadoturnoSerializer(serializers.ModelSerializer):
      class Meta:
@@ -37,7 +37,7 @@ class ObraSocialSerializer(serializers.ModelSerializer):
 class ProfesionalSerializer(serializers.ModelSerializer):
     class Meta:
         model= Profesional
-        fields='__all__'        
+        fields=['id', 'nombre', 'apellido', 'especialidad']       
 #5
 class PacienteSerializer(serializers.ModelSerializer):
     class Meta:
