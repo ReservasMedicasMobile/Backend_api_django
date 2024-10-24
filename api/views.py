@@ -44,26 +44,27 @@ def nuevo_turno(request):
         data = request.data
         fecha_turno = data.get('fecha_turno')
         hora_turno = data.get('hora_turno')
-        estado_turno_id = data.get('estado|_turno_id')
-        username = data.get('username')
+        username_id = data.get('username_id')
+        especialidad_id = data.get('especialidad_id')
         profesional_id = data.get('profesional_id')
-        especialidad = data.get('especialidad')
+        paciente_id = data.get('paciente_id')
 
-        if not username:
+        if not username_id:
             return Response({"error": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            paciente = User.objects.get(username=username)
+            paciente = User.objects.get(username=username_id)
         except User.DoesNotExist:
             return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
         turno = Turnos(
+            
             fecha_turno=fecha_turno,
             hora_turno=hora_turno,
-            estado_turno_id=estado_turno_id,
-            username=username,
-            profesional_id=profesional_id,
-            especialidad=especialidad
+            id_user=username_id,
+            especialidad=especialidad_id,
+            profesional=profesional_id,
+            paciente=paciente_id,
         )
         turno.save()
 
@@ -76,8 +77,8 @@ def nuevo_turno(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def lista_turnos_usuario(request):
-    username = request.user.username
-    turnos = Turnos.objects.filter(username=username)
+    username = request.user.username_id
+    turnos = Turnos.objects.filter(id_user=username)
     serializer = TurnosSerializer(turnos, many=True)
     return Response(serializer.data)
 

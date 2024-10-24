@@ -47,10 +47,10 @@ class Profesional(models.Model):
         
 # #5
 class Paciente(models.Model):
+    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     dni = models.CharField(max_length=100)
-    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     fecha_nacimiento = models.DateField()
     obra_social = models.ForeignKey(Obra_Social, on_delete=models.CASCADE, related_name='pacientes')
     correo = models.CharField(max_length=100)
@@ -69,15 +69,12 @@ class Paciente(models.Model):
 #     profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE, related_name='turnos',null=True)  # Clave foránea a Profesional
 
 class Turnos(models.Model):
+    id_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     fecha_turno = models.DateField(null=True, blank=True)
     hora_turno = models.TimeField(null=True, blank=True)
-    estado_turno_id = models.CharField(max_length=150, null=True, blank=True)
-    username = models.CharField(max_length=150, null=True, blank=True)
-    #profesional_id = models.CharField(max_length=150, null=True, blank=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.SET_NULL, null=True, blank=True)
     paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True)
-    profesional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Medico')
-    #profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE)
+    profesional = models.ForeignKey(Profesional, on_delete=models.SET_NULL, null=True, blank=True)
     creado_en = models.DateTimeField(default=timezone.now)
     eliminado= models.BooleanField(default=False, blank=True, verbose_name='Cancelado')
 
