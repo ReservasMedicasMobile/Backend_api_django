@@ -157,8 +157,8 @@ SIMPLE_JWT = {
 
 
 
-CORS_ALLOWED_ORIGINS = ["http://192.168.0.20:4200","http://localhost:4200" ,"http://localhost:55342"]
-CORS_ORIGIN_WHITE_LIST= ["http://localhost:4200","http://localhost:55342"]
+CORS_ALLOWED_ORIGINS = ["http://192.168.0.20:4200","http://localhost:4200"]
+CORS_ORIGIN_WHITE_LIST= ["http://localhost:4200"]
 
 CORS_ORIGIN_ALLOW_ALL = True
 

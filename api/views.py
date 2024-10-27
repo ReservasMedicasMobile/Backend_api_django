@@ -37,7 +37,7 @@ from .models import Turnos
 
 
 @api_view(['POST'])
-@authentication_classes([JWTAuthentication, TokenAuthentication])
+#@authentication_classes([JWTAuthentication, TokenAuthentication])
 #@permission_classes([IsAuthenticated])
 def nuevo_turno(request):
     try:
@@ -51,20 +51,23 @@ def nuevo_turno(request):
 
         if not id_user_id:
             return Response({"error": "id_user_id is required."}, status=status.HTTP_400_BAD_REQUEST)
-
+        """
         try:
-            paciente = User.objects.get(id_user_id=id_user_id)
+            id_user_id = User.objects.get(id=id_user_id)
         except User.DoesNotExist:
             return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
-
+        """
+        esp = Especialidad.objects.get(id=especialidad_id)
+        prof = Profesional.objects.get(id=profesional_id)
+        pac = Paciente.objects.get(id=paciente_id)
         turno = Turnos(
             
             fecha_turno=fecha_turno,
             hora_turno=hora_turno,
             id_user_id=id_user_id,
-            especialidad=especialidad_id,
-            profesional=profesional_id,
-            paciente=paciente_id,
+            especialidad=esp,
+            profesional=prof,
+            paciente=pac,
         )
         turno.save()
 
@@ -72,6 +75,7 @@ def nuevo_turno(request):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
  
+
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
