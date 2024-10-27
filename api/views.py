@@ -38,22 +38,22 @@ from .models import Turnos
 
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def nuevo_turno(request):
     try:
         data = request.data
         fecha_turno = data.get('fecha_turno')
         hora_turno = data.get('hora_turno')
-        username_id = data.get('username_id')
+        id_user_id = data.get('id_user_id')
         especialidad_id = data.get('especialidad_id')
         profesional_id = data.get('profesional_id')
         paciente_id = data.get('paciente_id')
 
-        if not username_id:
-            return Response({"error": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
+        if not id_user_id:
+            return Response({"error": "id_user_id is required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            paciente = User.objects.get(username=username_id)
+            paciente = User.objects.get(id_user_id=id_user_id)
         except User.DoesNotExist:
             return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -61,7 +61,7 @@ def nuevo_turno(request):
             
             fecha_turno=fecha_turno,
             hora_turno=hora_turno,
-            id_user=username_id,
+            id_user_id=id_user_id,
             especialidad=especialidad_id,
             profesional=profesional_id,
             paciente=paciente_id,
@@ -75,13 +75,42 @@ def nuevo_turno(request):
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def lista_turnos_usuario(request):
-    username = request.user.username_id
-    turnos = Turnos.objects.filter(id_user=username)
-    serializer = TurnosSerializer(turnos, many=True)
-    return Response(serializer.data)
 
+def lista_turnos_usuario(request, id_user_id):
+   
+    try: 
+        turnos = Turnos.objects.filter(id_user_id=id_user_id)
+
+        
+        if not turnos.exists():
+            return Response({"detail": ""}, status=status.HTTP_404_NOT_FOUND)
+
+        
+        serializer = TurnosSerializer(turnos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+   
+    
+    except Turnos.DoesNotExist:
+        return Response({"error": "No se encontraron turnos para el usuario especificado."}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+"""# username = request.user.username_id
+    turnos = Turnos.objects.filter(id_user=username_id)
+    serializer = TurnosSerializer(turnos, many=True)
+    return Response(serializer.data)"""
+
+
+
+"""@api_view(['DELETE'])
+def eliminar_profesional(request, profesional_id):
+    try:
+        profesional = Profesional.objects.get(id=profesional_id)
+        profesional.delete() 
+        return Response({"message": "Profesional deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Profesional.DoesNotExist:
+        return Response({"error": "Profesional not found"}, status=status.HTTP_404_NOT_FOUND)"""
 
 
 
@@ -97,6 +126,7 @@ def login(request):
     
     
     return Response({"token": token.key, "user": serializer.data}, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def register(request):
@@ -288,7 +318,8 @@ class PacienteViewSet(viewsets.ModelViewSet):
     
 class TurnosViewSet(viewsets.ModelViewSet):
     queryset = Turnos.objects.all()
-    serializer_class = TurnosSerializer  
+    serializer_class = TurnosSerializer 
+
 
     
 class ContactoViewSet(viewsets.ModelViewSet):

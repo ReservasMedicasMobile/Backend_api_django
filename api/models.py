@@ -69,7 +69,8 @@ class Paciente(models.Model):
 #     profesional = models.ForeignKey(Profesional, on_delete=models.CASCADE, related_name='turnos',null=True)  # Clave foránea a Profesional
 
 class Turnos(models.Model):
-    id_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     fecha_turno = models.DateField(null=True, blank=True)
     hora_turno = models.TimeField(null=True, blank=True)
     especialidad = models.ForeignKey(Especialidad, on_delete=models.SET_NULL, null=True, blank=True)
