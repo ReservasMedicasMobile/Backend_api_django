@@ -99,6 +99,16 @@ def lista_turnos_usuario(request, id_user_id):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@api_view(['DELETE'])
+def eliminar_turno(request, id):
+    try:
+        turnos = Turnos.objects.get(id=id)
+        turnos.delete() 
+        return Response({"message": "Turno deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Especialidad.DoesNotExist:
+        return Response({"error": "turno not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
 
 """# username = request.user.username_id
     turnos = Turnos.objects.filter(id_user=username_id)
