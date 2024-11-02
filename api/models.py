@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 class Especialidad(models.Model):
     especialidad = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=500) #default='descripcion'
+    existe= models.BooleanField(default=True)
     #imagen = models.ImageField(null=False, blank=True)
     #precio = models.IntegerField(default=7000)
     class Meta:

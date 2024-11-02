@@ -26,5 +26,7 @@ urlpatterns = [
     path('eliminarespecialidad/<int:especialidad_id>/', views.eliminar_especialidad),
     path('eliminarprofesional/<int:profesional_id>/', views.eliminar_profesional),
     path('eliminar_turno/<int:id>/', views.eliminar_turno),
+   
+    path('especialidad/existe/<str:especialidad>', views.verificar_especialidad, name='especialidad-existe'),
     path('profesional/<int:profesional_id>/', views.actualizar_profesional),
-]
+]   

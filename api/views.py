@@ -280,7 +280,12 @@ def eliminar_especialidad(request, especialidad_id):
     except Especialidad.DoesNotExist:
         return Response({"error": "Especialidad not found"}, status=status.HTTP_404_NOT_FOUND)
 
-
+@api_view(['GET'])
+def verificar_especialidad(request, especialidad):
+    # Verifica si la especialidad existe en la base de datos
+    existe = Especialidad.objects.filter(especialidad=especialidad).exists()
+    
+    return Response({'existe': existe})
 
 @api_view(['PUT', 'PATCH'])
 def actualizar_profesional(request, profesional_id):
@@ -309,6 +314,7 @@ def eliminar_profesional(request, profesional_id):
     except Profesional.DoesNotExist:
         return Response({"error": "Profesional not found"}, status=status.HTTP_404_NOT_FOUND)
     
+  
 
 class EspecialidadViewSet(viewsets.ModelViewSet):
     queryset = Especialidad.objects.all()

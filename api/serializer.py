@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 class EspecialidadSerializer(serializers.ModelSerializer):
     class Meta:
         model=Especialidad
-        fields=['id', 'especialidad', 'descripcion']
+        fields=['id', 'especialidad', 'descripcion', 'existe']
 # #2
 class EstadoturnoSerializer(serializers.ModelSerializer):
      class Meta:
