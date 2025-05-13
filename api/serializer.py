@@ -45,10 +45,24 @@ class PacienteSerializer(serializers.ModelSerializer):
         fields='__all__'#Para que tome todos los campos  
 # #6
 class TurnosSerializer(serializers.ModelSerializer):
-    
+    nombre_profesional = serializers.SerializerMethodField()
+    nombre_especialidad = serializers.CharField(source='especialidad.especialidad', read_only=True)
+
     class Meta:
         model = Turnos
-        fields = ["id",'id_user_id','paciente','profesional', 'hora_turno', 'fecha_turno', 'especialidad']
+        fields = [
+            'id_user_id',
+            'paciente',
+            'profesional',  # ID del profesional
+            'nombre_profesional',  # Nombre completo
+            'especialidad',  # ID de especialidad
+            'nombre_especialidad',  # Nombre de especialidad
+            'hora_turno',
+            'fecha_turno'
+        ]
+
+    def get_nombre_profesional(self, obj):
+        return f"{obj.profesional.nombre} {obj.profesional.apellido}"
 
 #7
 class ContactoSerializer(serializers.ModelSerializer):
