@@ -51,6 +51,7 @@ class TurnosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Turnos
         fields = [
+            'id',
             'id_user_id',
             'paciente',
             'profesional',  # ID del profesional
