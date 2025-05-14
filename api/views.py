@@ -47,7 +47,7 @@ def nuevo_turno(request):
         id_user_id = data.get('id_user_id')
         especialidad_id = data.get('especialidad_id')
         profesional_id = data.get('profesional_id')
-        paciente_id = data.get('paciente_id')
+        #paciente_id = data.get('paciente_id')
 
         if not id_user_id:
             return Response({"error": "id_user_id is required."}, status=status.HTTP_400_BAD_REQUEST)
@@ -59,7 +59,7 @@ def nuevo_turno(request):
         """
         esp = Especialidad.objects.get(id=especialidad_id)
         prof = Profesional.objects.get(id=profesional_id)
-        pac = Paciente.objects.get(id=paciente_id)
+        #pac = Paciente.objects.get(id=paciente_id)
         turno = Turnos(
             
             fecha_turno=fecha_turno,
@@ -67,7 +67,7 @@ def nuevo_turno(request):
             id_user_id=id_user_id,
             especialidad=esp,
             profesional=prof,
-            paciente=pac,
+            #paciente=pac,
         )
         turno.save()
 
